@@ -1,0 +1,452 @@
+{% load staticfiles %}
+{% load blog_tags %}
+{% load User_tags %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- css -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--侧边栏-->
+
+    <!--
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Modern effects and styles for off-canvas navigation with CSS transitions and SVG animations using Snap.svg"/>
+    <meta name="keywords"
+          content="sidebar, off-canvas, menu, navigation, effect, inspiration, css transition, SVG, morphing, animation"/>
+          <meta name="author" content="Codrops"/> -->
+          <!-- <link rel="shortcut icon" href="../favicon.ico">-->
+
+
+          <style>
+            span.highlighted {
+                color: red;
+            }
+
+            .profilepic {
+                display: block;
+                border: 5px solid #fff;
+                border-radius: 300px;
+                width: 128px;
+                height: 128px;
+                margin: 0 auto;
+                position: relative;
+                overflow: hidden;
+                background: #88acdb;
+                -webkit-transition: all .2s ease-in;
+                display: -webkit-box;
+                -webkit-box-orient: horizontal;
+                -webkit-box-pack: center;
+                -webkit-box-align: center;
+                text-align: center
+            }
+            .header-author{position:relative;z-index:1;color:#fff;text-align: center;}
+        </style>
+        <style>
+
+            @import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
+
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                font-family: sans-serif;
+            }
+
+            .sidebar {
+                float: left;
+                width: 15%;
+                margin-left: -15%;
+                height: 100%;
+                background-color: #4d4d4d;
+                overflow: hidden;
+                transition: 0.8s all;
+                z-index:1;
+                position: absolute;
+            }
+
+            .side {
+                margin-left: 0;
+            }
+
+            /*靠边*/
+            .sidebar ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            /*去点*/
+            .sidebar ul li {
+                list-style: none;
+            }
+
+            /*去下划线*/
+            .sidebar ul li a {
+                text-decoration: none;
+                color: white;
+                height: 80px;
+                width: 100%;
+                font-size: 30px;
+                line-height: 80px;
+                text-align: center;
+                display: block;
+                transition: 0.6s all;
+                cursor:pointer;
+
+            }
+
+            .sidebar ul li a:hover {
+                background: #95a5a6;
+            }
+
+            .btn {
+             margin-left:auto;
+             float: left;
+             padding: 0 10px;
+             font-size: 40px;
+             text-decoration: none;
+             color: #2c3e50;
+             font-family: Ionicons;
+             cursor: pointer;
+             z-index:1;
+             position: absolute;
+
+
+         }
+
+         .btn:before {
+            content: '\f20d';
+        }
+
+        .btnc:before {
+            content: '\f12a';
+            color:white;
+        }
+
+    </style>
+    <!-- js -->
+    <script src="{% static 'blog/js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/pace.min.js' %}"></script>
+    <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+    <script type="javascript" src="{% static 'js/snap.svg-min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    <!--Bootstrap-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--自适应样式-->
+    <link rel="stylesheet" type="text/css" href="{% static '/static/css/responsive.css'%}">
+    <!--Font Awesome 图标web link-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- 标题栏logo-->
+    <link rel="icon" href="/static/images/logo.ico" type="image/x-icon">
+    <!-- 收藏夹logo-->
+    <link rel="shortcut icon" href="/static/images/logo.ico" type="image/x-icon">
+    {% block csslink %}要替换的css link{%endblock%}
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} 要替换的标题 {% endblock %}</title>
+    <style type="text/css">
+    /*———————————————————————————————首设置——————————————————————————————————*/
+    body {
+        background: #f5f5f5;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+        outline: none;
+        text-decoration: none;
+    }
+
+    /*———————————————————————————————导航栏——————————————————————————————————*/
+    #mu-header {
+        display: inline;
+        float: left;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 25px 0;
+        z-index: 999;
+        transition: all 0.5s;
+
+    }
+
+    #mu-header ul {
+        padding: 0;
+
+    }
+
+    #mu-header ul li {
+        list-style: disc;
+        font-size: 17px;
+        line-height: 1.59;
+
+    }
+
+    .mu-navbar {
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    .navbar-default .navbar-brand,
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-brand:focus {
+        color: #fff;
+        font-size: 35px;
+        font-family: "微软雅黑", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1";
+        /*微软雅黑电脑默认装有,英文与Unicode编码提高兼容性*/
+        margin-top: 0;
+        width: 120px;
+        line-height: 18px;
+    }
+
+    .navbar-brand img {
+        margin-top: -7px;
+    }
+
+    #mu-header.mu-fixed-nav {
+        width: 100%;
+        position: fixed;
+        padding: 10px 0;
+        background-color: #0097ab;
+    }
+
+    /*———————————————————————————————导航栏背景——————————————————————————————————*/
+    .banner {
+        top: 0px;
+    }
+
+    #mu-featured-slider {
+        background-color: #0097ab;
+        background-attachment: fixed;
+        width: 100%;
+    }
+
+    .header-banner {
+        height: 100px;
+    }
+
+
+    /*———————————————————————————————导航栏隐藏按钮——————————————————————————————————*/
+    .mu-menu {
+        margin-top: 4px;
+        padding: 0, 10px;
+    }
+
+    .navbar-default .mu-menu li a {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        padding: 0;
+        margin: 10px 15px;
+        transition: all 0.5s;
+        position: relative;
+    }
+
+    .navbar-default .mu-menu li a::after {
+        background-color: #fff;
+        content: '';
+        height: 2px;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        transform: scale(0);
+        transition: all 0.5s;
+    }
+
+    .navbar-default .mu-menu li a:hover,
+    .navbar-default .mu-menu li a:focus,
+    .navbar-default .navbar-nav>.active>a,
+    .navbar-default .navbar-nav>.active>a:focus,
+    .navbar-default .navbar-nav>.active>a:hover {
+        background-color: transparent;
+        color: #fff;
+    }
+
+    .navbar-default .mu-menu li a:hover::after,
+    .navbar-default .mu-menu li a:focus::after,
+    .navbar-default .navbar-nav>.active>a:focus::after,
+    .navbar-default .navbar-nav>.active>a:hover::after {
+        transform: scale(1);
+    }
+
+    /*———————————————————————————————主体内容——————————————————————————————————*/
+    #section {
+        padding: 0;
+        margin-top: 0px;
+    }
+
+    .section-content {
+        margin-top: 10px;
+        position: relative;
+
+    }
+
+    /*———————————————————————————————footer——————————————————————————————————*/
+    .footerbg {
+        color: #999;
+        width: 100%;
+        background: #f0f0f0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        font-size: 13px;
+        padding: 16px 0;
+
+    }
+
+    .fixed {
+        position: fixed;
+    }
+
+
+    .footerbg a {
+        color: #737373;
+    }
+    </style>
+    {% block css %}
+    <style type="text/css"></style>
+    {%endblock%}
+</head>
+
+<body>
+    <!--Start Header-->
+    <div class="container">
+
+
+    <header id="site-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}"><b>Black</b> &amp; White</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11">
+                                <!--Django模板语音用is_authenticated判断是否登录 -->
+                                {% if user.is_authenticated and user.username != 'root' %}
+                                <a href="/user" title="{{ user.username }}" data-hover="博客">博客</a>
+                                {% endif %}
+                                {% if not user.is_authenticated or user.username == 'root' %}
+                                <a href="/accounts/login/" title="登录" data-hover="博客">博客</a>
+                                {% endif %}
+                            </li>
+                            <li class="cl-effect-11"><a href="#" data-hover="关于">关于</a></li>
+                            <li class="cl-effect-11"><a href="#" data-hover="联系">联系</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
+                            <input type="search" name="q" placeholder="搜索" required>
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </header>
+</div>
+    <!--End Header -->
+    <!--Start banner -->
+    <banner class='banner'>
+        <div id="mu-featured-slider">
+            <div class="header-banner">
+            </div>
+        </div>
+    </banner>
+    <!--End banner-->
+    <section class="container" id="section">
+        <div class="section-content">
+            {% block content %}
+            <div>要替换的内容</div>
+            {% endblock %}
+        </div>
+    </section>
+    <!--footer-->
+    <footer class="footerbg fixed">
+        基于Django构建 © 2019
+        |
+        eosones&#8197;版权所有
+        |
+        <a href="http://www.miitbeian.gov.cn">粤ICP备19057936号</a>
+        |
+        托管于<a href="https://cloud.tencent.com/" title="tencent" target="_blank">&#8197;腾讯云主机</a>
+        |
+        <a href="/sitemap.xml" title="Sitemap" target="_blank">网站地图</a>
+        |
+        当前在线
+        {% get_online_count %}
+    </footer>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% block js %} 要替换的js {% endblock %}
+    <script type="text/javascript">
+    (function($) {
+        /*———————————————————————————————导航栏固定——————————————————————————————————*/
+        jQuery(window).bind('scroll', function() { /*给浏览器窗口绑定一个scroll事件*/
+            if ($(window).scrollTop() > 200) {
+                $('#mu-header').addClass('mu-fixed-nav');
+            } else {
+                $('#mu-header').removeClass('mu-fixed-nav');
+            }
+        });
+
+
+        /*———————————————————————————————底部信息栏(需完善)——————————————————————————————————*/
+        var viewW = $(window).width(); //浏览器高度 
+        if (viewW < 767) { //移动页面
+            $('.footerbg').addClass('hidden');
+        }
+        jQuery(window).resize(function() { //实时
+            var viewH = $(window).height(); //浏览器高度 
+            if (viewH > 600) {
+                $('.footerbg').removeClass('hidden');
+            } else if (viewH < 600) {
+                $('.footerbg').addClass('hidden');
+            }
+
+        });
+
+    })(jQuery);
+    </script>
+</body>
+
+</html>

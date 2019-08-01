@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block main %}
+<style type="text/css" xmlns:request.user.email>
+    #content-wrap
+{
+	margin-left:0px;
+}
+#content-left
+{
+	height:800px;
+	background-image: url(../image/bg.jpg);
+}
+#body {
+    font-size: 14px;
+    background-color: #fff;
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    overflow-y: hidden;
+}
+#panel-800988
+{
+	padding-top:20px;
+}
+#panel-800988 ul
+{
+	list-style:none;
+}
+#panel-800988 ul li
+{
+	padding:2px 0;
+}
+#panel-800988 ul li a
+{
+	color:#525050;
+}
+.ms
+{
+	margin-right:auto;
+}
+#new_blog,#new_label
+{
+	padding:25px;
+}
+.title
+{
+	margin-bottom:2rem;
+}
+td
+{
+	vertical-align:middle !important;
+}
+button{
+	margin:4px;
+}
+
+
+
+
+
+</style>
+<form method="post" id="jsAvatarForm">
+    {% csrf_token %}
+
+    <div class="form-horizontal bv-form">
+        <div class="row form-group">
+            <label for="name" class="control-label col-md-4">昵&ensp;称</label>
+            <div class="col-md-8 ">
+
+                <input type="text" name="nickname" class="form-control"
+                       value="{{request.user.nickname|default_if_none:'' }}" maxlength="30" id="nickname">
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="sex" class="control-label col-md-4">性&ensp;别</label>
+            <div class="col-md-8 ">
+                <label><input type="radio" name="gender" value="male"
+                {% if request.user.gender == 0  %}
+                    checked="checked"{% endif %} >男</label>
+                <label><input type="radio" name="gender" value="female" {% if request.user.gender  %}
+                    checked="checked"{% endif %}>女</label>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label for="password" class="control-label col-md-4">邮&ensp;箱</label>
+            <div class="col-md-8">
+                <input type="email" name="email" class="form-control" maxlength="254" id="email" value="{{ request.user.email|default_if_none:'' }}">
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="password" class="control-label col-md-4">生&ensp;日</label>
+            <div class="col-md-8">
+                <input type="text" name="birthday" class="form-control form_date" required="" id="birthday" value="{{ request.user.birthday|default_if_none:'' }}">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label for="username" class="control-label col-md-4">个人简介</label>
+            <div class="col-md-8">
+                <textarea name="content" cols="40" rows="10" class="form-control" maxlength="255" required="" id="content" >{{ request.user.content|default_if_none:'' }}</textarea>
+            </div>
+        </div>
+
+        <div class="row form-group button-group">
+            <div class="col-md-4 col-md-push-6">
+                <input type="submit" id="hand-in-image" class=" " value="保存修改">
+            </div>
+        </div>
+    </div>
+
+    {% csrf_token %}
+</form>
+{% endblock main %}

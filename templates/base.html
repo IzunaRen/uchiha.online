@@ -1,0 +1,440 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Black &amp; White</title>
+
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- css -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--侧边栏-->
+
+    <!--
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Modern effects and styles for off-canvas navigation with CSS transitions and SVG animations using Snap.svg"/>
+    <meta name="keywords"
+          content="sidebar, off-canvas, menu, navigation, effect, inspiration, css transition, SVG, morphing, animation"/>
+          <meta name="author" content="Codrops"/> -->
+    <!-- <link rel="shortcut icon" href="../favicon.ico">-->
+
+
+    <style>
+            span.highlighted {
+                color: red;
+            }
+
+            .profilepic {
+                display: block;
+                border: 5px solid #fff;
+                border-radius: 300px;
+                width: 128px;
+                height: 128px;
+                margin: 0 auto;
+                position: relative;
+                overflow: hidden;
+                background: #88acdb;
+                -webkit-transition: all .2s ease-in;
+                display: -webkit-box;
+                -webkit-box-orient: horizontal;
+                -webkit-box-pack: center;
+                -webkit-box-align: center;
+                text-align: center
+            }
+            .header-author{position:relative;z-index:1;color:#fff;text-align: center;}
+
+    </style>
+    <style>
+
+            @import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
+
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                font-family: sans-serif;
+            }
+
+            .sidebar {
+                float: left;
+                width: 15%;
+                margin-left: -15%;
+                height: 100%;
+                background-color: #4d4d4d;
+                overflow: hidden;
+                transition: 0.8s all;
+                z-index:1;
+                position: absolute;
+            }
+
+            .side {
+                margin-left: 0;
+            }
+
+            /*靠边*/
+            .sidebar ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            /*去点*/
+            .sidebar ul li {
+                list-style: none;
+            }
+
+            /*去下划线*/
+            .sidebar ul li a {
+                text-decoration: none;
+                color: white;
+                height: 80px;
+                width: 100%;
+                font-size: 30px;
+                line-height: 80px;
+                text-align: center;
+                display: block;
+                transition: 0.6s all;
+                cursor:pointer;
+
+            }
+
+            .sidebar ul li a:hover {
+                background: #95a5a6;
+            }
+
+            .btn {
+             margin-left:auto;
+             float: left;
+             padding: 0 10px;
+             font-size: 40px;
+             text-decoration: none;
+             color: #2c3e50;
+             font-family: Ionicons;
+             cursor: pointer;
+             z-index:1;
+             position: absolute;
+
+
+         }
+
+         .btn:before {
+            content: '\f20d';
+        }
+
+        .btnc:before {
+            content: '\f12a';
+            color:white;
+        }
+
+
+    </style>
+    <!-- js -->
+    <script src="{% static 'blog/js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/pace.min.js' %}"></script>
+    <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+    <script type="javascript" src="{% static 'js/snap.svg-min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<!--侧边栏-->
+<div class="sidebar">
+    <ul>
+        <div class="head" id="head-image-box" style='margin-top: 50%;'>
+            <a href="manager.html" name="blog1" class="profilepic">
+                <img name="personal-head-image" src="{{user.avatar.url}}" class="js-avatar">
+            </a>
+            <div>
+                <h2 id='username' class='header-author' style='top: 100%;margin-top: 20px;'>{{ user.username }}</h2>
+            </div>
+            <li style='margin-top:20%'><a class='fa fa-user-o' href="/user/{{ user.id}}">我的主页</a></li>
+            <li><a class='fa fa-book' href="/user/blog">纂写博文</a></li>
+            <li><a class='fa fa-bicycle'>随便逛逛</a></li>
+            {% if is_authenticated %}
+            <li><a class="fa fa-arrow-circle-right" href="{{ login_url }}">登陆</a></li>
+            >
+
+            {%else%}
+            <li><a class="fa fa-arrow-circle-left" role="button" href="javascript:" data-toggle="modal"
+                   data-target="#logoutmodel">注销</a></li>
+            >
+            {%endif%}
+    </ul>
+</div>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="logoutmodel" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>是否注销登录</p>
+            </div>
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">注销</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<a class="btn"></a>
+
+<script type="text/javascript">
+    $('.btn').on('click',function () {
+        $('.btn').toggleClass('btnc');
+        $('.sidebar').toggleClass('side');
+
+    })
+
+</script>
+<!---->
+
+<div class="container">
+
+
+    <header id="site-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}"><b>Black</b> &amp; White</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11">
+                                <!--Django模板语音用is_authenticated判断是否登录 -->
+                                {% if user.is_authenticated and user.username != 'root' %}
+                                <a href="/user" title="{{ user.username }}" data-hover="博客">博客</a>
+                                {% endif %}
+                                {% if not user.is_authenticated or user.username == 'root' %}
+                                <a href="/accounts/login/" title="登录" data-hover="博客">博客</a>
+                                {% endif %}
+                            </li>
+                            <li class="cl-effect-11"><a href="#" data-hover="关于">关于</a></li>
+                            <li class="cl-effect-11"><a href="#" data-hover="联系">联系</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
+                            <input type="search" name="q" placeholder="搜索" required>
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </header>
+</div>
+<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
+
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                {% block main %}
+                {% endblock main %}
+            </main>
+            <aside class="col-md-4">
+                {% block toc %}
+                {% endblock toc %}
+                <div class="widget widget-recent-posts">
+                    <h3 class="widget-title">最新文章</h3>
+                    {% get_recent_posts as recent_post_list %}
+                    <ul>
+                        {% for post in recent_post_list %}
+                        <li>
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        </li>
+                        {% empty %}
+                        暂无文章！
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="widget widget-archives">
+                    <h3 class="widget-title">归档</h3>
+                    {% archives as date_list %}
+                    <ul>
+                        {% for date in date_list %}
+                        <li>
+                            <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }}
+                                年 {{ date.month }} 月</a>
+                        </li>
+                        {% empty %}
+                        暂无归档！
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="widget widget-category">
+                    <h3 class="widget-title">分类</h3>
+                    {% get_categories as category_list %}
+                    <ul>
+                        {% for category in category_list %}
+                        <li>
+                            <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span
+                                    class="post-count">({{ category.num_posts }})</span></a>
+                        </li>
+                        {% empty %}
+                        暂无分类！
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title">标签云</h3>
+                    {% get_tags as tag_list %}
+                    <ul>
+                        {% for tag in tag_list %}
+                        <li>
+                            <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}</a>
+                        </li>
+                        {% empty %}
+                        暂无标签！
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="rss">
+                    <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer id="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="copyright">&copy 2017 - 采集自<a href="http://www.cssmoban.com/"
+                                                        target="_blank" title="模板之家">模板之家</a>
+                    - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="overlay overlay-hugeinc">
+    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+    <nav>
+        <ul>
+            <li><a href="{% url 'blog:index' %}">首页</a></li>
+            <li><a href="#">博客</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">联系</a></li>
+            <li>
+                <!--Django模板语音用is_authenticated判断是否登录 -->
+                {% if user.is_authenticated %}
+                <a href="/accounts/login/" title="{{ user.username }}">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </a>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <a href="/accounts/login/" title="登录">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                </a>
+                {% endif %}
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+
+<script src="{% static 'blog/js/script.js' %}"></script>
+<script>
+            //保存个人资料
+    $('#jsEditUserBtn').on('click', function(){
+        var _self = $(this),
+            $jsEditUserForm = $('#jsEditUserForm')
+            verify = verifySubmit(
+            [
+                {id: '#nick_name', tips: Dml.Msg.epNickName, require: true}
+            ]
+        );
+        if(!verify){
+           return;
+        }
+        $.ajax({
+            cache: false,
+            type: 'post',
+            dataType:'json',
+            url:"/user/",
+            data:$jsEditUserForm.serialize(),
+            async: true,
+            beforeSend:function(XMLHttpRequest){
+                _self.val("保存中...");
+                _self.attr('disabled',true);
+            },
+            success: function(data) {
+                if(data.nick_name){
+                    _showValidateError($('#nickname'), data.nick_name);
+                }else if(data.birthday){
+                   _showValidateError($('#birthday'), data.birthday);
+                }else if(data.address){
+                   _showValidateError($('#content'), data.content);
+                }else if(data.status == "failure"){
+                     Dml.fun.showTipsDialog({
+                        title: '保存失败',
+                        h2: data.msg
+                    });
+                }else if(data.status == "success"){
+                    Dml.fun.showTipsDialog({
+                        title: '保存成功',
+                        h2: '个人信息修改成功！'
+                    });
+                    setTimeout(function(){window.location.href = window.location.href;},1500);
+                }
+            },
+            complete: function(XMLHttpRequest){
+                _self.val("保存");
+                _self.removeAttr("disabled");
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
