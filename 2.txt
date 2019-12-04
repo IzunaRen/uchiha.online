@@ -11,7 +11,7 @@ cryptography==2.7
 defusedxml==0.6.0
 diff-match-patch==20181111
 dj-pagination==2.4.0
-Django==2.2
+Django==2.2.8
 django-allauth==0.39.1
 django-appconf==1.0.3
 django-autoslug==1.9.4
