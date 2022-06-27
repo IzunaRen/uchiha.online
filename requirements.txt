@@ -74,7 +74,7 @@ pyxdg==0.25
 PyYAML==3.12
 raven==6.10.0
 rcssmin==1.0.6
-reportlab==3.4.0
+reportlab==3.5.55
 requests==2.22.0
 requests-unixsocket==0.1.5
 rjsmin==1.1.0
